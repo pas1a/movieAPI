@@ -104,11 +104,7 @@ class ViewController: UIViewController {
                 
             }
             
-            else{
-                
-                print("Could not get data")
-                
-            }
+            
             
         }
         dataTask.resume()
