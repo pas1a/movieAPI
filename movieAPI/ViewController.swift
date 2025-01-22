@@ -20,7 +20,12 @@ class ViewController: UIViewController {
     
             
     @IBAction func buttonAction(_ sender: UIButton) {
-        FindMovie().getMovie()
+        FindMovie().getMovie(name: inputTextField.text!)
+        DispatchQueue.main.async{
+            print("hi")
+            self.textView.text = "\(FindMovie().cool)"
+
+        }
     }
     
 

@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct Movie: Codable{
+    static var movies : [NSDictionary] = []
+    static var currentMovieIndex = 0
+    static var favoriteMovie : [NSDictionary] = []
+}
+
 class FindMovie{
     
     var cool: String = ""
@@ -18,7 +24,7 @@ class FindMovie{
         let session = URLSession.shared
         
         
-        let movieURL = URL(string: "http://www.omdbapi.com/?t=\(name)&apikey=c24bdcdf")!
+        let movieURL = URL(string: "http://www.omdbapi.com/?s=\(name)&apikey=c24bdcdf")!
         
         
         let dataTask = session.dataTask(with: movieURL) { data, response, error in
@@ -35,20 +41,26 @@ class FindMovie{
                     
                     // Getting Json object from api
                         if let data = data {
-                            let jsonObj = try? JSONSerialization.jsonObject(with: d, options: .fragmentsAllowed) as? [String: Any]
+                            if let jsonObj = try? JSONSerialization.jsonObject(with: d, options: .fragmentsAllowed) as? NSDictionary{
                                 
                                 print(jsonObj)
                                 
-                                if let jsonObj = jsonObj{
-                                if let year = jsonObj["Year"] as? String{
-                                    print("Year: \(year)")
-                                    DispatchQueue.main.async {
-                                        self.cool = "release year: \(year)"
-                                        
-                                    }
+                    
+                            if let search = jsonObj.value(forKey: "Search") as? [NSDictionary]{
+                                print(search)
+                                DispatchQueue.main.async {
+                                    Movie.movies = search
+                                    self.cool = "\(Movie.movies)"
+                                    print("Search: \(search)")
+                                    
                                     
                                 }
+                                    
+                                
                             }
+                                
+                            }
+                                
                             
                             }
                             
