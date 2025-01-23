@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct Movie: Codable{
-    static var movies : [NSDictionary] = []
-    static var currentMovieIndex = 0
-    static var favoriteMovie : [NSDictionary] = []
-}
+
 
 class FindMovie{
     
